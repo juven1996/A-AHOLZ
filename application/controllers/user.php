@@ -2,24 +2,24 @@
 
 class User extends CI_Controller {
 
-    	
+
 	function index()
 	{
 		if($this->session->userdata('is_logged_in')){
 			redirect('admin/products');
         }else{
-        	$this->load->view('admin/login');	
+        	$this->load->view('admin/login');
         }
 	}
 
-    	
+
     function __encrip_password($password) {
         return md5($password);
-    }	
+    }
 
-    
+
 	function validate_credentials()
-	{	
+	{
 
 		$this->load->model('Users_model');
 
@@ -27,7 +27,7 @@ class User extends CI_Controller {
 		$password = $this->__encrip_password($this->input->post('password'));
 
 		$is_valid = $this->Users_model->validate($user_name, $password);
-		
+
 		if($is_valid)
 		{
 			$data = array(
@@ -40,22 +40,22 @@ class User extends CI_Controller {
 		else // incorrect username or password
 		{
 			$data['message_error'] = TRUE;
-			$this->load->view('admin/login', $data);	
+			$this->load->view('admin/login', $data);
 		}
-	}	
+	}
 
-    
+
 	function signup()
 	{
-		$this->load->view('admin/signup_form');	
+		$this->load->view('admin/signup_form');
 	}
-	
 
-    	
+
+
 	function create_member()
 	{
 		$this->load->library('form_validation');
-		
+
 		// field name, error message, validation rules
 		$this->form_validation->set_rules('first_name', 'Name', 'trim|required');
 		$this->form_validation->set_rules('last_name', 'Last Name', 'trim|required');
@@ -64,29 +64,29 @@ class User extends CI_Controller {
 		$this->form_validation->set_rules('password', 'Password', 'trim|required|min_length[4]|max_length[32]');
 		$this->form_validation->set_rules('password2', 'Password Confirmation', 'trim|required|matches[password]');
 		$this->form_validation->set_error_delimiters('<div class="alert alert-error"><a class="close" data-dismiss="alert">×</a><strong>', '</strong></div>');
-		
+
 		if($this->form_validation->run() == FALSE)
 		{
 			$this->load->view('admin/signup_form');
 		}
-		
+
 		else
-		{			
+		{
 			$this->load->model('Users_model');
-			
+
 			if($query = $this->Users_model->create_member())
 			{
-				$this->load->view('admin/signup_successful');			
+				$this->load->view('admin/signup_successful');
 			}
 			else
 			{
-				$this->load->view('admin/signup_form');			
+				$this->load->view('admin/signup_form');
 			}
 		}
-		
+
 	}
-	
-			
+
+
 	function logout()
 	{
 		$this->session->sess_destroy();
