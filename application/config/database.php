@@ -50,8 +50,8 @@ $active_record = TRUE;
 
 $db['default']['hostname'] = 'localhost';
 $db['default']['username'] = 'root';
-$db['default']['password'] = 'squeal';
-$db['default']['database'] = 'ci_sample';
+$db['default']['password'] = 'secret';
+$db['default']['database'] = 'ci_db';
 
 $db['default']['dbdriver'] = 'mysqli';
 $db['default']['dbprefix'] = '';
